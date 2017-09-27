@@ -32,4 +32,5 @@ class CrearPlanTrabajoRequest extends FormRequest
             'ruta_imagen'=> 'required'
         ];
     }
+    
 }

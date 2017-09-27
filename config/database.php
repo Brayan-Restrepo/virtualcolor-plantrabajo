@@ -14,6 +14,7 @@ return [
     */
 
     'default' => env('DB_CONNECTION', 'mysql'),
+    //'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +39,7 @@ return [
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
         ],
-
+        
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'localhost'),
@@ -53,18 +54,18 @@ return [
             'strict' => true,
             'engine' => null,
         ],
+        
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', 'ec2-54-163-229-169.compute-1.amazonaws.com'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'database' => env('DB_DATABASE', 'd1naar4hggjl3l'),
+            'username' => env('DB_USERNAME', 'ibhiadsfismajp'),
+            'password' => env('DB_PASSWORD', '1aaeafc320b5d6e0012fab125401d8c5a8578a3d2a33d82aaf6388dedae11587'),
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
-            'sslmode' => 'prefer',
         ],
 
         'sqlsrv' => [

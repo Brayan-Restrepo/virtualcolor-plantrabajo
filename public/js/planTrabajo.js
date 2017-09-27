@@ -4,107 +4,132 @@ $(document).ready(function() {
 	$(".textarea").wysihtml5();
 
 	$('#btn-guardar-plantrabajo').click(function(event) {
+        var fecha_inicio = $('#fecha-inicio').val();
+        var fecha_finalizacion = $('#fecha-finalizacion').val();
+        var responsable = $('#responsable').val();
+        var avance = $('#avance').val();
+        var objetivo = $('#objetivo').val();
 
-		$.ajax({
-			type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            },
-            url: 'plantrabajo',
-		    data: { 
-		        fecha_inicio: $('#fecha-inicio').val(),
-		        fecha_finalizacion: $('#fecha-finalizacion').val(),
-		        responsable: $('#responsable').val(),
-		        avance: $('#avance').val(),
-		        objetivo: $('#objetivo').val(),
-		        ruta_imagen: 'ruta-----'
-		    },
-            dataType: 'json',
-            success: function(data){
-            	$('#responsable-actividad').val(data.responsable);
-            	$('#plan_trabajo_id').val(data.id);
-            	$('#btn-guardar-actividad').removeAttr('disabled');
-            	$('#sede').removeAttr('disabled');
-            	$('#actividad').removeAttr('disabled');
-            	
-            	$('#fecha-inicio').attr('disabled', '');
-            	$('#fecha-finalizacion').attr('disabled', '');
-            	$('#responsable').attr('disabled', '');
-            	$('#avance').attr('disabled', '');
-            	$('#objetivo').attr('disabled', '');
-            	$('#btn-guardar-plantrabajo').attr('disabled', '');
-            },
-            error: function(data){
-            }
-		});
-	});
-
+        if(fecha_inicio=='' || fecha_finalizacion=='' || responsable=='' 
+            || avance=='' || objetivo==''){
+            alert("Todos los Datos son onligatorios");
+        }else{
+    		$.ajax({            
+    			type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+                url: 'plantrabajo',
+    		    data: { 
+    		        fecha_inicio: fecha_inicio,
+    		        fecha_finalizacion: fecha_finalizacion,
+    		        responsable: responsable,
+    		        avance: avance,
+    		        objetivo: objetivo,
+    		        ruta_imagen: 'ruta-----'
+    		    },
+                dataType: 'json',
+                success: function(data){
+                	$('#responsable-actividad').val(data.responsable);
+                	$('#plan_trabajo_id').val(data.id);
+                	$('#btn-guardar-actividad').removeAttr('disabled');
+                	$('#sede').removeAttr('disabled');
+                	$('#actividad').removeAttr('disabled');
+                	
+                	$('#fecha-inicio').attr('disabled', '');
+                	$('#fecha-finalizacion').attr('disabled', '');
+                	$('#responsable').attr('disabled', '');
+                	$('#avance').attr('disabled', '');
+                	$('#objetivo').attr('disabled', '');
+                	$('#btn-guardar-plantrabajo').attr('disabled', '');
+                },
+                error: function(data){
+                }
+    		});
+        }
+    });
+    
 	$('#btn-guardar-actividad').click(function(event) {
+        var plan_trabajo_id = $('#plan_trabajo_id').val();
+        var sede = $('#sede').val();
+        var actividad = $('#actividad').val();
+        if(plan_trabajo_id=='' || sede=='' || actividad==''){
+            alert("Todos los Datos son onligatorios");
 
-		$.ajax({
-			type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            },
-            url: 'plantrabajo/actividad',
-		    data: { 
-		    	plan_trabajo_id: $('#plan_trabajo_id').val(),
-		        sede: $('#sede').val(),
-		        actividad: $('#actividad').val()
-		    },
-            dataType: 'json',
-            success: function(data){
-            	$('#sede').val('');
-            	$('#actividad').val('');
+        }else{
+    		$.ajax({
+    			type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+                url: 'plantrabajo/actividad',
+    		    data: { 
+    		    	plan_trabajo_id: plan_trabajo_id,
+    		        sede: sede,
+    		        actividad: actividad
+    		    },
+                dataType: 'json',
+                success: function(data){
+                	$('#sede').val('');
+                	$('#actividad').val('');
 
-            	datosTabla(data);
-                
-                $('.eliminar_actividad').unbind( "click" );
-                $('.eliminar_actividad').click(eliminarActividad);
+                	datosTabla(data);
+                    
+                    $('.eliminar_actividad').unbind( "click" );
+                    $('.eliminar_actividad').click(eliminarActividad);
 
-                $('.editar_actividad').unbind( "click" );
-                $('.editar_actividad').click(editarActividad);
-            },
-            error: function(data){
-            }
-		});
+                    $('.editar_actividad').unbind( "click" );
+                    $('.editar_actividad').click(editarActividad);
+                },
+                error: function(data){
+                }
+    		});
+        }
 	});			
 
 	$('#btn-editar-actividad').click(function(event) {
 		var id_actividad = $('#actividad_id').val();
-		$.ajax({
-			type: 'PUT',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            },
-            url: 'plantrabajo/actividad/'+id_actividad,
-		    data: { 
-		    	plan_trabajo_id: $('#plan_trabajo_id').val(),
-		        sede: $('#sede').val(),
-		        actividad: $('#actividad').val()
-		    },
-            dataType: 'json',
-            success: function(data){
-            	$('#sede').val('');
-            	$('#actividad').val('');
-            	
-            	$('#'+data.id).closest('tr').remove();
+        var plan_trabajo_id = $('#plan_trabajo_id').val();
+        var sede = $('#sede').val();
+        var actividad = $('#actividad').val();
+        if(plan_trabajo_id=='' || sede=='' || actividad==''){
+            alert("Todos los Datos son onligatorios");
 
-				datosTabla(data);            	
-                
-                                
-                $('.eliminar_actividad').unbind( "click" );
-                $('.eliminar_actividad').click(eliminarActividad);
+        }else{
+    		$.ajax({
+    			type: 'PUT',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+                url: 'plantrabajo/actividad/'+id_actividad,
+    		    data: { 
+    		    	plan_trabajo_id: plan_trabajo_id,
+    		        sede: sede,
+    		        actividad: actividad
+    		    },
+                dataType: 'json',
+                success: function(data){
+                	$('#sede').val('');
+                	$('#actividad').val('');
+                	
+                	$('#'+data.id).closest('tr').remove();
 
-                $('.editar_actividad').unbind( "click" );
-                $('.editar_actividad').click(editarActividad);
+    				datosTabla(data);            	
+                    
+                                    
+                    $('.eliminar_actividad').unbind( "click" );
+                    $('.eliminar_actividad').click(eliminarActividad);
 
-                $('#btn-editar-actividad').addClass('hide');
-            	$('#btn-guardar-actividad').removeClass('hide')
-            },
-            error: function(data){
-            }
-		});
+                    $('.editar_actividad').unbind( "click" );
+                    $('.editar_actividad').click(editarActividad);
+
+                    $('#btn-editar-actividad').addClass('hide');
+                	$('#btn-guardar-actividad').removeClass('hide')
+                },
+                error: function(data){
+                }
+    		});
+        }
 	});			
 
 	function datosTabla(data){
@@ -156,5 +181,8 @@ $(document).ready(function() {
             }
 		});
 	}
+
+    
+
 });
 	
