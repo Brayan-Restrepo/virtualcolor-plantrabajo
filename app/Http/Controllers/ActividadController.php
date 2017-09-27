@@ -38,10 +38,7 @@ class ActividadController extends Controller
      */
     public function store(CrearActividadRequest $request)
     {
-        if ($request->fails()) {
-            dd("--------");
-        }
-
+        
         $actividad = Actividad::create($request->all());
 
         //dd($actividad->planTrabajo->fecha_inicio);

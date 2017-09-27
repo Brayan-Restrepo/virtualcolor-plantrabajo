@@ -24,7 +24,12 @@ class CrearPlanTrabajoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'fecha_inicio'=> 'required',
+            'fecha_finalizacion'=> 'required',
+            'responsable'=> 'required',
+            'avance'=> 'required',
+            'objetivo'=> 'required',
+            'ruta_imagen'=> 'required'
         ];
     }
 }
